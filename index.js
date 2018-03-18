@@ -7,7 +7,7 @@ export const CAN_EXTENDED = 4;
 
 const CAN_MSG_LENGTH = 16;
 
-export function unpackCAN(data): Array<CanMsg> {
+export function unpackCAN (data): Array<CanMsg> {
   // Data must be a multiple of CAN_MSG_LENGTH
   if (data.byteLength % CAN_MSG_LENGTH !== 0) {
     let err = new Error('can-message.unpackCAN: byteLength must be a multiple of ' + CAN_MSG_LENGTH);
@@ -40,7 +40,9 @@ export function unpackCAN(data): Array<CanMsg> {
    return msgs;
 }
 
-export function packCAN({ address, data, bus }: CanMsg): Buffer {
+export function packCAN (canMessage): Buffer {
+  var { address, data, bus } = canMessage;
+
   if (data.byteLength > 8) {
     let err = new Error('can-message.packCAN: byteLength cannot be greater than 8');
     throw err;
