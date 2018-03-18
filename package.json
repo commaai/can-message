@@ -1,0 +1,31 @@
+{
+  "name": "can-message",
+  "version": "0.0.1",
+  "description": "utility functions for handling CAN data from comma.ai panda",
+  "main": "dist.js",
+  "scripts": {
+    "test": "jest",
+    "build": "babel ./index.js --presets env,stage-3,flow --out-file ./dist.js",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "CAN",
+    "panda",
+    "comma.ai",
+    "javascript"
+  ],
+  "author": "Andy Haden, Sean Pollock",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^22.4.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "escape-string-regexp": "^1.0.5",
+    "jest-cli": "^22.4.2"
+  },
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
+  }
+}
