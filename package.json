@@ -1,6 +1,6 @@
 {
   "name": "can-message",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "utility functions for handling CAN data from comma.ai panda",
   "main": "dist.js",
   "scripts": {
