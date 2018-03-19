@@ -48,10 +48,11 @@ function unpackCAN(data) {
   return msgs;
 }
 
-function packCAN(_ref) {
-  var address = _ref.address,
-      data = _ref.data,
-      bus = _ref.bus;
+function packCAN(canMessage) {
+  var address = canMessage.address,
+      data = canMessage.data,
+      bus = canMessage.bus;
+
 
   if (data.byteLength > 8) {
     var err = new Error('can-message.packCAN: byteLength cannot be greater than 8');
