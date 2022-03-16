@@ -51,7 +51,7 @@ test('unpackCAN correctly parses a 16-byte buffer', () => {
 
   const msgs = unpackCAN(buf);
   expect(msgs.length).toBe(1);
-  expect(msgs[0]).toEqual({ address: 1373, busTime: 43947, data: dataBytes, bus: 10 })
+  expect(msgs[0]).toEqual({ address: 1373, busTime: 43947, data: dataBytes, bus: 10 });
 
 });
 

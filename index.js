@@ -7,7 +7,7 @@ export const CAN_EXTENDED = 4;
 
 const CAN_MSG_LENGTH = 16;
 
-export function unpackCAN (data): Array<CanMsg> {
+export function unpackCAN(data): Array<CanMsg> {
   // Data must be a multiple of CAN_MSG_LENGTH
   if (data.byteLength % CAN_MSG_LENGTH !== 0) {
     let err = new Error('can-message.unpackCAN: byteLength must be a multiple of ' + CAN_MSG_LENGTH);
@@ -17,30 +17,30 @@ export function unpackCAN (data): Array<CanMsg> {
   const msgs = [];
 
   for (let i = 0; i < data.byteLength; i += CAN_MSG_LENGTH) {
-     let dat = data.slice(i, i + CAN_MSG_LENGTH);
+    let dat = data.slice(i, i + CAN_MSG_LENGTH);
 
-     let datView = Buffer.from(dat);
+    let datView = Buffer.from(dat);
 
-     let f1 = datView.readInt32LE(0), f2 = datView.readInt32LE(4);
-     let address;
-     if ((f1 & CAN_EXTENDED) >>> 0) {
+    let f1 = datView.readInt32LE(0), f2 = datView.readInt32LE(4);
+    let address;
+    if ((f1 & CAN_EXTENDED) >>> 0) {
       address = f1 >>> 3;
-     } else {
+    } else {
       address = f1 >>> 21;
-     }
+    }
 
-     let busTime = (f2 >>> 16);
-     let canMsgData = new Buffer(dat.slice(8, 8 + (f2 & 0xF)));
-     let bus = ((f2 >> 4) & 0xF) & 0xFF;
+    let busTime = (f2 >>> 16);
+    let canMsgData = new Buffer(dat.slice(8, 8 + (f2 & 0xF)));
+    let bus = ((f2 >> 4) & 0xF) & 0xFF;
 
-     let msg: CanMsg = { address, busTime, data: canMsgData, bus };
-     msgs.push(msg);
-   }
+    let msg: CanMsg = { address, busTime, data: canMsgData, bus };
+    msgs.push(msg);
+  }
 
-   return msgs;
+  return msgs;
 }
 
-export function packCAN (canMessage): Buffer {
+export function packCAN(canMessage): Buffer {
   var { address, data, bus } = canMessage;
 
   if (data.byteLength > 8) {
