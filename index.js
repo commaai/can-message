@@ -16,11 +16,11 @@ export function unpackCAN(data): Array<CanMsg> {
   const msgs = [];
 
   for (let i = 0; i < data.byteLength; i += CAN_MSG_LENGTH) {
-    let dat = data.slice(i, i + CAN_MSG_LENGTH);
+    const dat = data.slice(i, i + CAN_MSG_LENGTH);
 
-    let datView = Buffer.from(dat);
+    const datView = Buffer.from(dat);
 
-    let f1 = datView.readInt32LE(0), f2 = datView.readInt32LE(4);
+    const f1 = datView.readInt32LE(0), f2 = datView.readInt32LE(4);
     let address;
     if ((f1 & CAN_EXTENDED) >>> 0) {
       address = f1 >>> 3;
@@ -28,11 +28,11 @@ export function unpackCAN(data): Array<CanMsg> {
       address = f1 >>> 21;
     }
 
-    let busTime = (f2 >>> 16);
-    let canMsgData = new Buffer(dat.slice(8, 8 + (f2 & 0xF)));
-    let bus = ((f2 >> 4) & 0xF) & 0xFF;
+    const busTime = (f2 >>> 16);
+    const canMsgData = new Buffer(dat.slice(8, 8 + (f2 & 0xF)));
+    const bus = ((f2 >> 4) & 0xF) & 0xFF;
 
-    let msg: CanMsg = { address, busTime, data: canMsgData, bus };
+    const msg: CanMsg = { address, busTime, data: canMsgData, bus };
     msgs.push(msg);
   }
 
@@ -40,7 +40,7 @@ export function unpackCAN(data): Array<CanMsg> {
 }
 
 export function packCAN(canMessage): Buffer {
-  var { address, data, bus } = canMessage;
+  let { address, data, bus } = canMessage;
 
   if (data.byteLength > 8) {
     throw new Error('can-message.packCAN: byteLength cannot be greater than 8');
@@ -52,7 +52,7 @@ export function packCAN(canMessage): Buffer {
     address = ((address << 21) | CAN_TRANSMIT) >>> 0;
   }
 
-  let buf = Buffer.alloc(0x10);
+  const buf = Buffer.alloc(0x10);
 
   buf.writeUInt32LE(address);
   buf.writeUInt32LE((data.byteLength | (bus << 4)) >>> 0, 4);
