@@ -10,8 +10,7 @@ const CAN_MSG_LENGTH = 16;
 export function unpackCAN(data): Array<CanMsg> {
   // Data must be a multiple of CAN_MSG_LENGTH
   if (data.byteLength % CAN_MSG_LENGTH !== 0) {
-    let err = new Error('can-message.unpackCAN: byteLength must be a multiple of ' + CAN_MSG_LENGTH);
-    throw err;
+    throw new Error('can-message.unpackCAN: byteLength must be a multiple of ' + CAN_MSG_LENGTH);
   }
 
   const msgs = [];
@@ -44,8 +43,7 @@ export function packCAN(canMessage): Buffer {
   var { address, data, bus } = canMessage;
 
   if (data.byteLength > 8) {
-    let err = new Error('can-message.packCAN: byteLength cannot be greater than 8');
-    throw err;
+    throw new Error('can-message.packCAN: byteLength cannot be greater than 8');
   }
 
   if (address >= 0x800) {
